@@ -7,7 +7,7 @@ This project is built entirely with **HTML** and a touch of inline styling — s
 
 ## 🚀 Live Demo
 Check it out here:  
-👉 [https://yourusername.github.io/my-portfolio/](https://yourusername.github.io/my-portfolio/)
+👉 [https://yourusername.github.io/my-portfolio/](https://tomyamgtx.github.io/html-portfolio/)
 
 ---
 
@@ -27,7 +27,7 @@ Check it out here:
 ---
 
 ## 📸 Preview
-![Portfolio Screenshot](https://via.placeholder.com/800x400?text=Portfolio+Preview)
+![Portfolio Screenshot](./screenshot.png)
 
 ---
 
