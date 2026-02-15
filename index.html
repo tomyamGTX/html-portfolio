@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hachimy | Portfolio</title>
   <style>
     :root {
-      --bg: #e9fffc;
-      --text: #2c3e50;
-      --card: #ffffffd9;
-      --accent: #147b6c;
-      --accent-light: #7ec1bc;
+      --bg: #fff;
+      --text: #000;
+      --card: #fff;
+      --section-bg: #f5f5f5;
+      --accent: #000;
+      --accent-light: #555;
     }
 
     [data-theme="dark"] {
-      --bg: #0f2027;
-      --text: #e6f5f4;
-      --card: #1a2a2f;
-      --accent: #25b99a;
-      --accent-light: #7fffe5;
+      --bg: #000;
+      --text: #fff;
+      --card: #111;
+      --section-bg: #222;
+      --accent: #fff;
+      --accent-light: #aaa;
     }
 
     body {
@@ -26,88 +29,68 @@
       font-family: "Poppins", sans-serif;
       background: var(--bg);
       color: var(--text);
+      scroll-behavior: smooth;
       transition: background 0.3s ease, color 0.3s ease;
     }
 
     header {
       text-align: center;
-      padding: 3rem 1rem 2rem;
+      padding: 2rem 1rem 1rem;
+      background: var(--card);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     header h1 {
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       color: var(--accent);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
     }
 
     header p {
       color: var(--accent-light);
       font-weight: 500;
+      font-size: 1rem;
+      margin-bottom: 1rem;
     }
 
-    /* Floating theme toggle button */
-    .theme-toggle {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      background: var(--card);
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 1.3rem;
-      cursor: pointer;
+    nav a {
+      margin: 0 0.8rem;
       color: var(--accent);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
-      z-index: 999;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
     }
 
-    .theme-toggle:hover {
-      transform: scale(1.1);
+    nav a:hover {
+      color: var(--accent-light);
     }
 
     section {
-      max-width: 800px;
-      margin: 2rem auto;
-      background: var(--card);
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 2.5rem 2rem;
       border-radius: 1rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, color 0.3s ease;
+      scroll-margin-top: 220px;
     }
 
     h2 {
+      font-size: 1.9rem;
       color: var(--accent);
       border-bottom: 2px solid var(--accent-light);
       padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
 
-    p {
+    p,
+    li {
+      font-size: 1rem;
       line-height: 1.7;
-    }
-
-    ul {
-      list-style-type: square;
-      padding-left: 1.5rem;
-    }
-
-    blockquote {
-      border-left: 4px solid var(--accent);
-      padding-left: 1rem;
-      font-style: italic;
-      opacity: 0.9;
-    }
-
-    img {
-      display: block;
-      margin: 1rem auto;
-      border-radius: 50%;
-      width: 160px;
-      height: 160px;
-      object-fit: cover;
-      border: 4px solid var(--accent);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      color: var(--text);
     }
 
     a {
@@ -122,77 +105,348 @@
       text-decoration: underline;
     }
 
+    blockquote {
+      font-style: italic;
+      opacity: 0.9;
+      padding-left: 1rem;
+      border-left: 4px solid var(--accent);
+      margin: 2rem auto 0;
+      font-size: 1rem;
+    }
+
+    img.avatar {
+      display: block;
+      margin: 1rem auto;
+      border-radius: 50%;
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Grid layout for skills/projects */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1rem;
+    }
+
+    .grid-item {
+      background: var(--card);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+
+    .grid-item:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .grid-item p {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-align: left;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--card);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--accent);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, color 0.3s ease, background 0.3s ease;
+      z-index: 999;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
     footer {
       text-align: center;
-      margin-top: 3rem;
-      padding: 1.5rem 1rem;
-      background: var(--accent);
-      color: white;
+      padding: 2rem 1rem;
+      background: #111;
+      color: #fff;
       border-top-left-radius: 1rem;
       border-top-right-radius: 1rem;
-      transition: background 0.3s ease;
+    }
+
+    footer nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    footer nav a:hover {
+      text-decoration: underline;
+    }
+
+    footer a.email-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      background: #222;
+      color: #fff;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    footer a.email-btn:hover {
+      background: #333;
     }
 
     footer small {
       display: block;
-      margin-top: 0.5rem;
-      font-size: 0.85rem;
-      opacity: 0.9;
+      margin-top: 1rem;
+      color: #ccc;
+    }
+
+    /* Scroll animations */
+    .animate {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Section backgrounds */
+    #background,
+    #tools,
+    #achievements,
+    #projects,
+    #leadership,
+    #connect {
+      background: var(--section-bg);
+      border-radius: 1rem;
+      margin-bottom: 2rem;
     }
   </style>
 </head>
+
 <body>
-  <header>
+  <!-- HEADER & NAV -->
+  <header class="animate">
     <h1>Welcome to My Portfolio</h1>
-    <p>Web Developer • Tech Enthusiast • Lifelong Learner</p>
+    <p>Web & Mobile Developer • Tech Enthusiast • Lifelong Learner</p>
+    <nav>
+      <a href="#background">Background</a>
+      <a href="#tools">Tools</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#projects">Projects</a>
+      <a href="#leadership">Leadership</a>
+      <a href="#connect">Connect</a>
+    </nav>
   </header>
 
-  <section>
+  <!-- BACKGROUND -->
+  <section id="background" class="animate">
     <h2>Background</h2>
     <p>
-      I have <strong>2 years</strong> of experience in web development.  
-      I learned from <em>w3schools</em> and various online resources.  
-      Sometimes I even get helpful suggestions from <mark>ChatGPT</mark> 😉.  
-      I <ins>love coding</ins> and never forget to drink H<sub>2</sub>O!  
+      I am an IT graduate with <strong>professional experience since 2022</strong>, mostly working remotely.
+      Specialized in <strong>Flutter</strong> for building responsive cross-platform apps and modern web solutions.
+      Experienced with <strong>Firebase</strong>, hosting via <strong>Cloudflare</strong>, <strong>Vercel</strong>, and
+      <strong>GitHub Pages</strong>.
     </p>
-
     <blockquote>
-      “Humankind has not woven the web of life. We are but one thread within it.  
-      Whatever we do to the web, we do to ourselves. All things connect.”
+      “Working remotely has strengthened my discipline and creativity, allowing me to deliver quality web and mobile
+      solutions consistently.”
     </blockquote>
   </section>
 
-  <section>
-    <h2>Skills</h2>
-    <ul>
-      <li>HTML</li>
-      <li>CSS</li>
-      <li>JavaScript</li>
-    </ul>
+  <!-- TOOLS & EXPERTISE -->
+  <section id="tools" class="animate">
+    <h2>Tools & Expertise</h2>
+    <div class="grid-container">
+      <div class="grid-item animate">
+        <div style="font-size:2rem;">💻</div>
+        <strong>Flutter & Dart</strong>
+        <p>Cross-platform apps with modern UI</p>
+      </div>
+      <div class="grid-item animate">
+        <div style="font-size:2rem;">☁️</div>
+        <strong>Backend & Hosting</strong>
+        <p>Firebase, Cloudflare, GitHub Pages, Vercel</p>
+      </div>
+      <div class="grid-item animate">
+        <div style="font-size:2rem;">💳</div>
+        <strong>Payment Integration</strong>
+        <p>Stripe for one-off & subscription payments</p>
+      </div>
+      <div class="grid-item animate">
+        <div style="font-size:2rem;">📈</div>
+        <strong>SEO & Analytics</strong>
+        <p>Next.js, Google Search Console, Bing Webmaster Tools</p>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>More Information</h2>
-    <img src="https://tse1.mm.bing.net/th/id/OIP.MoN7VKL77f_MBXIUOjyELQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="My Avatar" />
-    <p>Find me on social media:</p>
-    <p>
-      <a href="https://www.tiktok.com/@hachimy99" target="_blank">🎵 TikTok: @hachimy99</a>
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements" class="animate">
+    <h2>Achievements</h2>
+    <div class="grid-container">
+      <div class="grid-item animate">
+        <div style="font-size:2rem;">🏆</div>
+        <strong>App Launches</strong>
+        <p>Published multiple apps to Play Store & App Store</p>
+      </div>
+      <div class="grid-item animate">
+        <div style="font-size:2rem;">⚡</div>
+        <strong>High-Impact Features</strong>
+        <p>Drag-to-reorder, quantity selection, offline mode, notifications</p>
+      </div>
+      <div class="grid-item animate">
+        <div style="font-size:2rem;">🌙</div>
+        <strong>Portfolio</strong>
+        <p>Responsive website with light/dark mode toggle</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="animate">
+    <h2>Projects</h2>
+    <div class="grid-container">
+      <div class="grid-item animate">
+        <div style="font-size:2.5rem;">📝</div>
+        <strong>To-Do, Notes & Shopping Apps</strong>
+        <p>Flutter apps with drag-to-reorder, quantity selection, Firebase integration</p>
+      </div>
+      <div class="grid-item animate">
+        <div style="font-size:2.5rem;">💻</div>
+        <strong>Portfolio Website</strong>
+        <p>Responsive, modern UI with light/dark mode toggle</p>
+      </div>
+      <div class="grid-item animate">
+        <div style="font-size:2.5rem;">🎯</div>
+        <strong>Interactive Web Quizzes</strong>
+        <p>Coding challenges and learning exercises for practice</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section id="leadership" class="animate">
+    <h2>Leadership</h2>
+    <div class="grid-container">
+      <div class="grid-item animate">
+        <div style="font-size:2.5rem;">👨‍💼</div>
+        <strong>Intern Management</strong>
+        <p>Supervised interns across multiple projects</p>
+      </div>
+      <div class="grid-item animate">
+        <div style="font-size:2.5rem;">📋</div>
+        <strong>Project Coordination</strong>
+        <p>Organized tasks, tracked progress, ensured deadlines</p>
+      </div>
+      <div class="grid-item animate">
+        <div style="font-size:2.5rem;">🤝</div>
+        <strong>Team Guidance</strong>
+        <p>Supported teams to implement client requirements efficiently</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNECT -->
+  <section id="connect" class="animate" style="padding:3rem 2rem; border-radius:1rem; background:var(--section-bg);">
+    <h2>Connect with Me</h2>
+    <p style="margin-bottom:1.5rem;">
+      I’m happy to connect, collaborate, or share insights about web & mobile development. Reach out below:
+    </p>
+    <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap:1rem;">
+      <div class="grid-item" style="font-size:1.8rem; padding:0.8rem;">
+        <a href="https://www.threads.com/@kimimdnoor99" target="_blank"
+          style="text-decoration:none; color:var(--accent); display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+          🎵
+          <span style="font-size:0.9rem;">Thread</span>
+        </a>
+      </div>
+      <div class="grid-item" style="font-size:1.8rem; padding:0.8rem;">
+        <a href="https://github.com/tomyamGTX" target="_blank"
+          style="text-decoration:none; color:var(--accent); display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+          💻
+          <span style="font-size:0.9rem;">GitHub</span>
+        </a>
+      </div>
+      <div class="grid-item" style="font-size:1.8rem; padding:0.8rem;">
+        <a href="https://www.linkedin.com/in/hakimimdnoor/" target="_blank"
+          style="text-decoration:none; color:var(--accent); display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+          🔗
+          <span style="font-size:0.9rem;">LinkedIn</span>
+        </a>
+      </div>
+      <div class="grid-item" style="font-size:1.8rem; padding:0.8rem;">
+        <a href="mailto:hakimimdnoor@gmail.com"
+          style="text-decoration:none; color:var(--accent); display:flex; flex-direction:column; align-items:center; gap:0.2rem;">
+          📧
+          <span style="font-size:0.9rem;">Email Me</span>
+        </a>
+      </div>
+    </div>
+    <p style="margin-top:1.5rem; font-size:0.95rem; opacity:0.8; text-align:center;">
+      Available for collaborations, freelance projects, or just chatting about tech!
     </p>
   </section>
 
-  <footer>
-    <p>Created by <strong>hachimy99</strong></p>
-    <small>Thank you for visiting my portfolio!</small>
-  </footer>
 
-  <!-- Floating theme toggle button -->
+
+  <!-- THEME TOGGLE -->
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
 
+  <!-- FOOTER -->
+  <footer>
+    <div style="max-width:900px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem;">
+      <div style="text-align:center;">
+        <nav style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem; font-size:0.95rem;">
+          <a href="#background">Background</a>|
+          <a href="#tools">Tools</a>|
+          <a href="#achievements">Achievements</a>|
+          <a href="#projects">Projects</a>|
+          <a href="#leadership">Leadership</a>|
+          <a href="#connect">Connect</a>
+        </nav>
+      </div>
+      <div style="text-align:center;">
+        <p style="margin:0; font-weight:600;">Created by <strong>hachimy99</strong></p>
+        <small>© 2026 All rights reserved</small>
+      </div>
+      <div style="text-align:center;">
+        <a href="mailto:hakimimdnoor@gmail.com" class="email-btn" title="Send me an email">
+          <span style="font-size:1.3rem;">📧</span>
+          <span>Email Me</span>
+        </a>
+      </div>
+      <small style="text-align:center;">Thank you for visiting my portfolio!</small>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
   <script>
+    // Theme toggle
     const themeToggle = document.getElementById("themeToggle");
     const savedTheme = localStorage.getItem("theme");
-
-    // Detect system theme if no saved preference
     if (savedTheme) {
       document.documentElement.setAttribute("data-theme", savedTheme);
       themeToggle.textContent = savedTheme === "dark" ? "☀️" : "🌙";
@@ -200,7 +454,6 @@
       document.documentElement.setAttribute("data-theme", "dark");
       themeToggle.textContent = "☀️";
     }
-
     themeToggle.addEventListener("click", () => {
       const current = document.documentElement.getAttribute("data-theme");
       const next = current === "dark" ? "light" : "dark";
@@ -208,6 +461,20 @@
       localStorage.setItem("theme", next);
       themeToggle.textContent = next === "dark" ? "☀️" : "🌙";
     });
+
+    // Scroll animations
+    const animateElements = document.querySelectorAll('.animate');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    animateElements.forEach(el => observer.observe(el));
   </script>
 </body>
+
 </html>
