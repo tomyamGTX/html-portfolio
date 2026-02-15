@@ -13,6 +13,7 @@
       --section-bg: #f5f5f5;
       --accent: #000;
       --accent-light: #555;
+      --text-size: 1rem;
     }
 
     [data-theme="dark"] {
@@ -25,6 +26,8 @@
     }
 
     body {
+      font-size: var(--text-size);
+      transition: font-size 0.2s ease;
       margin: 0;
       font-family: "Poppins", sans-serif;
       background: var(--bg);
@@ -88,7 +91,7 @@
 
     p,
     li {
-      font-size: 1rem;
+      font-size: var(--text-size);
       line-height: 1.7;
       color: var(--text);
     }
@@ -111,7 +114,7 @@
       padding-left: 1rem;
       border-left: 4px solid var(--accent);
       margin: 2rem auto 0;
-      font-size: 1rem;
+      font-size: var(--text-size);
     }
 
     img.avatar {
@@ -141,6 +144,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: default;
+
     }
 
     .grid-item:hover {
@@ -150,7 +154,7 @@
 
     .grid-item p {
       margin-top: 0.5rem;
-      font-size: 0.95rem;
+      font-size: var(--text-size);
       color: var(--text);
       text-align: left;
     }
@@ -172,6 +176,36 @@
       transition: transform 0.2s ease, color 0.3s ease, background 0.3s ease;
       z-index: 999;
     }
+
+    /* Font size controls */
+    .font-size-controls {
+      position: fixed;
+      bottom: 1.5rem;
+      /* Same vertical level as theme toggle */
+      right: 5.5rem;
+      /* Push left so it doesn’t overlap the theme toggle */
+      display: flex;
+      gap: 0.5rem;
+      z-index: 999;
+    }
+
+    .font-size-controls button {
+      background: var(--card);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--accent);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, color 0.3s ease, background 0.3s ease;
+    }
+
+    .font-size-controls button:hover {
+      transform: scale(1.1);
+    }
+
 
     .theme-toggle:hover {
       transform: scale(1.1);
@@ -242,6 +276,20 @@
       background: var(--section-bg);
       border-radius: 1rem;
       margin-bottom: 2rem;
+    }
+
+    /* Mobile: stack vertically */
+    @media (max-width: 600px) {
+      .font-size-controls {
+        bottom: 5rem;
+        /* shift up for smaller screens */
+        right: 1.5rem;
+        /* align both at same right */
+      }
+
+      .font-size-controls {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -411,9 +459,18 @@
   </section>
 
 
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"
+    style="padding:0.6rem 0.8rem; border-radius:0.5rem; border:none; cursor:pointer; font-size:1.2rem;">🌙</button>
 
-  <!-- THEME TOGGLE -->
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+  <!-- Font Size Controls -->
+  <div class="font-size-controls">
+    <button id="decrease-text" title="Decrease Text">A-</button>
+    <button id="increase-text" title="Increase Text">A+</button>
+  </div>
+
+
+
 
   <!-- FOOTER -->
   <footer>
@@ -474,6 +531,36 @@
     }, { threshold: 0.2 });
 
     animateElements.forEach(el => observer.observe(el));
+
+    // Increment / Decrement Text Size
+    const MIN_SIZE = 0.8; // 0.8rem
+    const MAX_SIZE = 1.5; // 1.5rem
+    const STEP = 0.05;    // each click changes by 0.05rem
+
+    const decreaseBtn = document.getElementById("decrease-text");
+    const increaseBtn = document.getElementById("increase-text");
+
+    // Load saved size
+    let currentSize = parseFloat(localStorage.getItem("text-size")) || 1;
+
+    // Apply initial size
+    document.documentElement.style.setProperty("--text-size", currentSize + "rem");
+
+    // Decrease
+    decreaseBtn.addEventListener("click", () => {
+      currentSize = Math.max(MIN_SIZE, currentSize - STEP);
+      document.documentElement.style.setProperty("--text-size", currentSize + "rem");
+      localStorage.setItem("text-size", currentSize);
+    });
+
+    // Increase
+    increaseBtn.addEventListener("click", () => {
+      currentSize = Math.min(MAX_SIZE, currentSize + STEP);
+      document.documentElement.style.setProperty("--text-size", currentSize + "rem");
+      localStorage.setItem("text-size", currentSize);
+    });
+
+
   </script>
 </body>
 
